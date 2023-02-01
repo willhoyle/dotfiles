@@ -168,8 +168,12 @@ lvim.plugins = {
       "folke/trouble.nvim",
       cmd = "TroubleToggle",
     },
+  {
+    "https://gitlab.com/yorickpeterse/nvim-pqf.git"
+  },
 }
 
+require('pqf').setup()
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
