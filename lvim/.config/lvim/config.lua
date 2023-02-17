@@ -77,6 +77,9 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 lvim.builtin.terminal.active = false
 lvim.builtin.project.active = false
 
+lvim.builtin.bufferline.options.mode = 'tabs'
+require("lvim.core.bufferline").setup()
+
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
