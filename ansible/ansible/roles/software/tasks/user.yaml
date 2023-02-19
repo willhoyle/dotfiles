@@ -1,0 +1,24 @@
+---
+# User specific software
+
+# oh-my-zsh
+- name: Check if oh-my-zsh is already installed
+  become_user: "{{ username }}"
+  ansible.builtin.stat:
+    path: /home/{{ username }}/.oh-my-zsh/oh-my-zsh.sh
+  register: b
+  changed_when: false
+
+- name: Install oh-my-zsh
+  become_user: "{{ username }}"
+  ansible.builtin.script: 'roles/software/files/oh-my-zsh.sh'
+  when: not b.stat.exists
+
+- name: Install powerlevel10k theme
+  become_user: "{{ username }}"
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: /home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k
+    clone: yes
+    update: yes
+  when: not b.stat.exists

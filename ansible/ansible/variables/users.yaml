@@ -1,0 +1,8 @@
+---
+users: 
+  - username: will
+    github_username: willhoyle
+    dotfiles:
+      repo_name: dotfiles
+  - username: mack
+    github_username: mackhoyle

@@ -1,0 +1,57 @@
+---
+# - name: Deploy fpp development server
+#   hosts: fpp
+#   remote_user: root
+#   vars_files:
+#     - variables/users.yaml
+#   tasks:
+#     - name: Create user accounts
+#       include_tasks: roles/user/tasks/main.yaml
+#       vars:
+#           username: "{{ item.username }}"
+#           github_username: "{{ item.github_username }}"
+#       loop: "{{ users }}"
+
+# - name: Install homebrew
+#   remote_user: will
+#   hosts: fpp
+#   tasks:
+#     - name: Install homebrew
+#       include_tasks: 
+#         file: roles/brew/tasks/main.yaml
+
+# - name: Install base global software
+#   remote_user: will
+#   hosts: fpp
+#   tasks:
+#     - name: Ensure all software are installed and up-to-date
+#       include_tasks: 
+#         file: roles/software/tasks/main.yaml
+
+- name: Add homebrew PATH to profile
+  hosts: fpp
+  remote_user: root
+  vars_files:
+    - variables/users.yaml
+  tasks:
+    - name: Add homebrew PATH to profile
+      include_tasks: 
+        file: roles/brew/tasks/profile.yaml
+      vars:
+        username: "{{ item.username }}"
+      loop: "{{ users }}"
+
+    - name: Clone and stow dotfiles
+      include_tasks: roles/dotfiles/tasks/main.yaml
+      vars:
+        username: "{{ item.username }}"
+        github_username: "{{ item.github_username }}"
+        dotfiles: "{{ item.dotfiles }}"
+      loop: "{{ users }}"
+
+    - name: Ensure all software are installed and up-to-date
+      include_tasks: 
+        file: roles/software/tasks/user.yaml
+      vars:
+        username: "{{ item.username }}"
+      loop: "{{ users }}"

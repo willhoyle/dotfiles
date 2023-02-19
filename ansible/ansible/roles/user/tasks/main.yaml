@@ -1,0 +1,26 @@
+---
+- name: Ensure group "developers" exists
+  ansible.builtin.group:
+    name: developers
+    state: present
+
+- name: Create user
+  ansible.builtin.user:
+    name: "{{ username }}"
+    comment: "{{ username }}"
+    shell: /home/linuxbrew/.linuxbrew/bin/zsh
+    group: developers
+
+- name: Configuring sudoer access
+  community.general.sudoers:
+    name: "allow-all-sudo-user-{{ username }}"
+    state: present
+    user: "{{ username }}"
+    commands: ALL
+    nopassword: true
+
+- name: Set authorized keys taken from url
+  ansible.posix.authorized_key:
+    user: "{{ username }}"
+    state: present
+    key: https://github.com/{{ github_username }}.keys

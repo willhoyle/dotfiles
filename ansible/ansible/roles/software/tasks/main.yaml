@@ -1,0 +1,53 @@
+---
+- name: Upgrade all apt packages
+  become: true
+  apt: upgrade=dist force_apt_get=yes
+
+- name: Check if a reboot is needed for Debian and Ubuntu boxes
+  become: true
+  register: reboot_required_file
+  stat: path=/var/run/reboot-required get_md5=no
+
+- name: Reboot the Debian or Ubuntu server
+  become: true
+  reboot:
+    msg: "Reboot initiated by Ansible due to kernel updates"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: reboot_required_file.stat.exists
+
+# https://www.jeffgeerling.com/blog/2017/add-path-global-path-ansible
+- name: Add brew bins to global PATH
+  become: true
+  vars:
+    paths:
+      - /home/linuxbrew/.linuxbrew/bin
+      - /home/linuxbrew/.linuxbrew/sbin
+  ansible.builtin.lineinfile:
+    dest:           "/etc/environment"
+    state:          present
+    regexp:         '^(PATH=\")({{ item }}:)?((?(2).*?(?!(?:.\"))|.*?(?!(?:{{ item }}))))(:{{ item }})?((?(4).*|\"))'
+    line:           '\1\3:{{ item }}\5'
+    backrefs:       yes
+  loop: "{{ paths }}"
+  register: global_path
+
+- name: reboot so every process can have the updated PATH
+  become: true
+  ansible.builtin.reboot:
+  when: global_path.changed
+
+- name: Install make
+  community.general.homebrew:
+    name: make
+
+- name: Install stow
+  community.general.homebrew:
+    name: stow
+
+- name: Install nvm
+  community.general.homebrew:
+    name: nvm

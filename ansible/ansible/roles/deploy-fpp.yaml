@@ -1,0 +1,2 @@
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote
+  ansible.builtin.shell: "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

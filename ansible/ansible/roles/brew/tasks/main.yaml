@@ -1,0 +1,12 @@
+---
+# http://rapidprogrammer.com/how-to-install-homebrew-with-ansible
+- name: Check if Homebrew is already installed
+  ansible.builtin.stat:
+    path: /home/linuxbrew/.linuxbrew
+  register: b
+  changed_when: false
+
+- name: Install Homebrew
+  ansible.builtin.script: 'roles/brew/files/install-homebrew.sh'
+  when: not b.stat.exists
+

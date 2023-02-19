@@ -1,0 +1,6 @@
+- name: Add lines to user .profile
+  ansible.builtin.lineinfile:
+    path: "/home/{{ username }}/.profile"
+    search_string: "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
+    line: 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+    state: present
