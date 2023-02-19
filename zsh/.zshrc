@@ -113,7 +113,7 @@ export EDITOR='lvim'
 #
 # Example aliases
 alias zshe="lvim ~/.zshrc"
-alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ohmyzshe="lvim ~/.oh-my-zsh"
 alias sshe="lvim ~/.ssh/config"
 
 alias s="kitty +kitten ssh"
@@ -124,5 +124,10 @@ alias s="kitty +kitten ssh"
 export PATH=$HOME/go/bin:$HOME/.local/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
+# For macOS
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# For linux
+[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
