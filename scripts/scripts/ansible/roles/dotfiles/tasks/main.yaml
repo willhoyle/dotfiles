@@ -1,6 +1,5 @@
 ---
 - name: Clone dotfiles
-  become_user: "{{ username }}"
   ansible.builtin.git:
     repo: https://github.com/{{ github_username }}/{{ dotfiles.repo_name }}.git
     dest: /home/{{ username }}/projects/{{ dotfiles.repo_name }}
@@ -9,7 +8,6 @@
   when: dotfiles is defined
 
 - name: Stow files
-  become_user: "{{ username }}"
   community.general.make:
     chdir: /home/{{ username }}/projects/{{ dotfiles.repo_name }}
     target: all

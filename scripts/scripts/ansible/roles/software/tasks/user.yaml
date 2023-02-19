@@ -3,33 +3,39 @@
 
 # oh-my-zsh
 - name: Check if oh-my-zsh is already installed
-  become_user: "{{ username }}"
   ansible.builtin.stat:
-    path: /home/{{ username }}/.oh-my-zsh/oh-my-zsh.sh
+    path: "/home/{{ username }}/.oh-my-zsh/oh-my-zsh.sh"
   register: b
   changed_when: false
 
 - name: Install oh-my-zsh
-  become_user: "{{ username }}"
   ansible.builtin.git:
     repo: https://github.com/ohmyzsh/ohmyzsh
-    dest: /home/{{ username }}/.oh-my-zsh
+    dest: "/home/{{ username }}/.oh-my-zsh"
     clone: yes
     update: yes
   when: not b.stat.exists
 
 - name: Check if powerlevel10k exists
-  become_user: "{{ username }}"
   ansible.builtin.stat:
-    path: /home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k
+    path: "/home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k"
   register: p
   changed_when: false
 
 - name: Install powerlevel10k theme
-  become_user: "{{ username }}"
   ansible.builtin.git:
     repo: https://github.com/romkatv/powerlevel10k.git
-    dest: /home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k
+    dest: "/home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k"
     clone: yes
     update: yes
   when: not p.stat.exists
+
+- name: Check if lunarvim is already installed
+  ansible.builtin.stat:
+    path: "/home/{{ username }}/.local/bin/lvim"
+  register: l
+  changed_when: false
+
+- name: Install lunarvim
+  ansible.builtin.script: 'roles/software/files/lunarvim.sh'
+  when: not l.stat.exists

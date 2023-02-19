@@ -24,3 +24,29 @@
     user: "{{ username }}"
     state: present
     key: https://github.com/{{ github_username }}.keys
+
+- name: Copy ssh pub key from local to server
+  ansible.builtin.copy:
+    src: "{{ ssh_pub_key_file }}"
+    dest: "/home/{{ username }}/.ssh/"
+    owner: "{{ username }}"
+    group: developers
+    mode: '600'
+  when: ssh_pub_key_file is defined
+
+- name: Copy ssh private key from local to server
+  ansible.builtin.copy:
+    src: "{{ ssh_priv_key_file }}"
+    dest: "/home/{{ username }}/.ssh/"
+    owner: "{{ username }}"
+    group: developers
+    mode: '600'
+  when: ssh_priv_key_file is defined
+
+- name: Create projects if it does not exist
+  ansible.builtin.file:
+    path: /home/{{ username }}/projects
+    state: directory
+    owner: "{{ username }}"
+    group: "developers"
+    mode: '0755'

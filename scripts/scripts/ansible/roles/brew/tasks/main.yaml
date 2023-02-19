@@ -9,4 +9,3 @@
 - name: Install Homebrew
   ansible.builtin.script: 'roles/brew/files/install-homebrew.sh'
   when: not b.stat.exists
-

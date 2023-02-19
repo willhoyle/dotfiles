@@ -1,0 +1,10 @@
+---
+- name: Install financialcpp
+  ansible.builtin.git:
+    repo: git@github.com:financialcpp/financialcpp.git
+    dest: "/home/{{ username }}/projects/financialcpp"
+    clone: yes
+    update: yes
+  environment:
+    GIT_TERMINAL_PROMPT: "0"
+
