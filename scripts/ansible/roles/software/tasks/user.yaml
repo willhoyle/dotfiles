@@ -11,8 +11,19 @@
 
 - name: Install oh-my-zsh
   become_user: "{{ username }}"
-  ansible.builtin.script: 'roles/software/files/oh-my-zsh.sh'
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh
+    dest: /home/{{ username }}/.oh-my-zsh
+    clone: yes
+    update: yes
   when: not b.stat.exists
+
+- name: Check if powerlevel10k exists
+  become_user: "{{ username }}"
+  ansible.builtin.stat:
+    path: /home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k
+  register: p
+  changed_when: false
 
 - name: Install powerlevel10k theme
   become_user: "{{ username }}"
@@ -21,4 +32,4 @@
     dest: /home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k
     clone: yes
     update: yes
-  when: not b.stat.exists
+  when: not p.stat.exists
