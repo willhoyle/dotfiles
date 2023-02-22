@@ -5,6 +5,7 @@
     dest: "/home/{{ username }}/projects/financialcpp"
     clone: yes
     update: yes
+    # key_file: /home/{{ username }}/.ssh/{{ key_file }}
   environment:
     GIT_TERMINAL_PROMPT: "0"
 

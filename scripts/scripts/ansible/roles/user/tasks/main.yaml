@@ -1,4 +1,10 @@
 ---
+- name: Install zsh
+  become: true
+  ansible.builtin.apt:
+    name: zsh
+    update_cache: yes
+
 - name: Ensure group "developers" exists
   ansible.builtin.group:
     name: developers
@@ -8,16 +14,16 @@
   ansible.builtin.user:
     name: "{{ username }}"
     comment: "{{ username }}"
-    shell: /home/linuxbrew/.linuxbrew/bin/zsh
+    shell: /usr/bin/zsh
     group: developers
 
 - name: Configuring sudoer access
-  community.general.sudoers:
-    name: "allow-all-sudo-user-{{ username }}"
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
     state: present
-    user: "{{ username }}"
-    commands: ALL
-    nopassword: true
+    regexp: '^{{ username }}'
+    line: '{{ username }} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
 
 - name: Set authorized keys taken from url
   ansible.posix.authorized_key:

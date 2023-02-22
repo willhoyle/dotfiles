@@ -39,3 +39,17 @@
 - name: Install lunarvim
   ansible.builtin.script: 'roles/software/files/lunarvim.sh'
   when: not l.stat.exists
+
+# lunarvim replaces .config/lvim with a new version. We need to remove
+# their config.lua so stow doesn't complain
+- name: Gather info about lvim/config.lua
+  ansible.builtin.stat:
+    path: "/home/{{ username }}/.config/lvim/config.lua"
+  register: lunar_config
+  changed_when: false
+
+- name: Clean up lunarvim config.lua if not a symlink
+  ansible.builtin.file:
+    path: "/home/{{ username }}/.config/lvim/config.lua"
+    state: absent
+  when: lunar_config.stat and 'islnk' in lunar_config.stat and not lunar_config.stat.islnk

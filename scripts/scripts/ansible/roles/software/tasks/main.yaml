@@ -1,12 +1,24 @@
 ---
-- name: Upgrade all apt packages
+- name: Upgrade dist
   become: true
   apt: upgrade=dist force_apt_get=yes
+
+- name: Upgrade all apt packages
+  become: true
+  apt:
+    update_cache: true
 
 - name: Install build-essential
   become: true
   ansible.builtin.apt:
     name: build-essential
+    update_cache: yes
+
+- name: Install acl
+  become: true
+  ansible.builtin.apt:
+    name: acl
+    update_cache: yes
 
 - name: Check if a reboot is needed for Debian and Ubuntu boxes
   become: true
@@ -23,17 +35,6 @@
     post_reboot_delay: 30
     test_command: uptime
   when: reboot_required_file.stat.exists
-
-- name: Remove "python" package
-  become: true
-  ansible.builtin.apt:
-    name: python3
-    state: absent
-
-- name: Remove dependencies that are no longer required
-  become: true
-  ansible.builtin.apt:
-    autoremove: yes
 
 # https://www.jeffgeerling.com/blog/2017/add-path-global-path-ansible
 - name: Add brew bins to global PATH

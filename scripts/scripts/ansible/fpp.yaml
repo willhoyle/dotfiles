@@ -41,6 +41,7 @@
         file: roles/brew/tasks/profile.yaml
         apply:
           become_user: "{{ item.username }}"
+          become: true
       vars:
         username: "{{ item.username }}"
       loop: "{{ users }}"
@@ -49,7 +50,10 @@
       include_tasks:
         file: roles/dotfiles/tasks/main.yaml
         apply:
+          become: true
           become_user: "{{ item.username }}"
+          # loads .profile properly because it adds -l flag
+          become_method: "community.general.sudosu" 
       vars:
         username: "{{ item.username }}"
         github_username: "{{ item.github_username }}"
@@ -60,7 +64,10 @@
       include_tasks: 
         file: roles/software/tasks/user.yaml
         apply:
+          become: true
           become_user: "{{ item.username }}"
+          # loads .profile properly because it adds -l flag
+          become_method: "community.general.sudosu" 
       vars:
         username: "{{ item.username }}"
       loop: "{{ users }}"
@@ -69,7 +76,11 @@
       include_tasks: 
         file: roles/projects/tasks/main.yaml
         apply:
+          become: true
           become_user: "{{ item.username }}"
+          # loads .profile properly because it adds -l flag
+          become_method: "community.general.sudosu" 
       vars:
         username: "{{ item.username }}"
+        key_file: "{{ item.ssh_key_file }}"
       loop: "{{ users }}"

@@ -3,8 +3,11 @@ users:
   - username: will
     github_username: willhoyle
     dotfiles:
-      repo_name: dotfiles
+      repo_name: willhoyle/dotfiles
     ssh_pub_key_file: /Users/will/.ssh/id_ed25519.pub
     ssh_priv_key_file: /Users/will/.ssh/id_ed25519
+    ssh_key_file: id_ed25519
   - username: mack
     github_username: mackhoyle
+    dotfiles:
+      repo_name: willhoyle/dotfiles
