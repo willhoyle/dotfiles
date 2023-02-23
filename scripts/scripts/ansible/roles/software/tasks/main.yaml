@@ -84,3 +84,7 @@
 - name: Install node
   community.general.homebrew:
     name: node
+
+- name: Install cmake
+  community.general.homebrew:
+    name: cmake
