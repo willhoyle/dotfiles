@@ -138,3 +138,5 @@ export PATH=$HOME/scripts:$PATH
 # Ensure gg is executable
 chmod +x ~/scripts/ff
 
+git config --global user.name "Will Hoyle"
+git config --global user.email "will.hoyle@gmail.com"
