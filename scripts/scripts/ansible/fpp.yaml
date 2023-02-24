@@ -30,6 +30,20 @@
       include_tasks: 
         file: roles/software/tasks/main.yaml
 
+    - name: Install docker
+      vars:
+        docker_compose_version: "v2.16.0"
+        docker_packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+      include_tasks: 
+        file: roles/docker/tasks/main.yaml
+        apply:
+          become: true
+
 - name: Install user specific software (dotfiles, set paths) 
   hosts: fpp
   remote_user: will

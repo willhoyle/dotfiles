@@ -10,12 +10,23 @@
     name: developers
     state: present
 
+- name: Create docker group
+  ansible.builtin.group:
+    name: docker
+    state: present
+
 - name: Create user
   ansible.builtin.user:
     name: "{{ username }}"
     comment: "{{ username }}"
     shell: /usr/bin/zsh
     group: developers
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups: docker
+    append: yes
 
 - name: Configuring sudoer access
   ansible.builtin.lineinfile:
