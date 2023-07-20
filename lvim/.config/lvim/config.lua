@@ -10,8 +10,8 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = true
-lvim.colorscheme = "tokyonight-dark"
+lvim.format_on_save = true
+lvim.colorscheme = "tokyonight-moon"
 -- to disable icons and use a minimalist setup, uncomment the following
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -33,15 +33,21 @@ lvim.plugins = {
     cmd = "TroubleToggle",
   },
   {
-    "https://gitlab.com/yorickpeterse/nvim-pqf.git"
+    url = "https://gitlab.com/yorickpeterse/nvim-pqf.git"
   },
-  { "~/projects/codegen" },
   { 'yegappan/mru' },
   { 'numToStr/FTerm.nvim' },
   {
     'nvim-treesitter/playground'
-  }
+  },
+  { 'nvim-lua/plenary.nvim' },
+
+  -- local projects
+  { dir = "~/projects/codegen" },
+  { dir = '~/projects/dev',    config = function() require('dev') end }
 }
+
+-- require('codegen').setup()
 
 -- FTerm
 local fterm = require("FTerm")
@@ -115,8 +121,21 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-local codegen = require('codegen')
-
 
 vim.opt.relativenumber = true
 vim.opt.timeoutlen = 250
+
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  { command = "black" },
+}
+
+local code_actions = require "lvim.lsp.null-ls.code_actions"
+code_actions.setup {
+  {
+    command = "proselint"
+  },
+}
+
+lvim.builtin.nvimtree.setup.update_focused_file.enable = false
+lvim.builtin.nvimtree.setup.update_focused_file.update_root = false
