@@ -59,35 +59,4 @@
 
 - name: Install make
   community.general.homebrew:
-    name: make
-
-- name: Install stow
-  community.general.homebrew:
-    name: stow
-
-- name: Install neovim
-  community.general.homebrew:
-    name: neovim
-
-- name: Install fzf
-  community.general.homebrew:
-    name: fzf
-
-- name: Install rust
-  community.general.homebrew:
-    name: rust
-
-- name: Install python
-  community.general.homebrew:
-    name: python
-
-- name: Install node
-  community.general.homebrew:
-    name: node
-
-- name: Install cmake
-  community.general.homebrew:
-    name: cmake
-- name: Install lazygit
-  community.general.homebrew:
-    name: lazygit
+    name: make,stow,neovim,fzf,rust,python,node,cmake,lazygit
