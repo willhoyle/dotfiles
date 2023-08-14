@@ -44,7 +44,8 @@ lvim.plugins = {
 
   -- local projects
   { dir = "~/projects/codegen" },
-  { dir = '~/projects/dev',    config = function() require('dev') end }
+  { dir = '~/projects/dev',    config = function() require('dev') end },
+  { 'ojroques/vim-oscyank'}
 }
 
 -- require('codegen').setup()
@@ -128,6 +129,7 @@ vim.opt.timeoutlen = 250
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black" },
+  { command = "prettier"}
 }
 
 local code_actions = require "lvim.lsp.null-ls.code_actions"
