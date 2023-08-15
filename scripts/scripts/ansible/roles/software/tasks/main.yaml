@@ -57,6 +57,6 @@
   ansible.builtin.reboot:
   when: global_path.changed
 
-- name: Install make
+- name: Install brew packages
   community.general.homebrew:
     name: make,stow,neovim,fzf,rust,python,node,cmake,lazygit

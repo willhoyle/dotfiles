@@ -1,11 +1,7 @@
 ---
 - name: Install financialcpp
-  ansible.builtin.git:
-    repo: git@github.com:financialcpp/financialcpp.git
-    dest: "/home/{{ username }}/projects/financialcpp"
-    clone: yes
-    update: yes
-    # key_file: /home/{{ username }}/.ssh/{{ key_file }}
-  environment:
-    GIT_TERMINAL_PROMPT: "0"
+  ansible.builtin.shell: GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:financialcpp/financialcpp.git /home/{{ username }}/projects/financialcpp || true
+
+- name: Install dev
+  ansible.builtin.shell: GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:willhoyle/dev.git /home/{{ username }}/projects/dev || true
 

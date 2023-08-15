@@ -3,15 +3,16 @@
 # it looks for tree-sitter but it's already installed by neovim 
 # js package and then fails
 #
-# python=$HOMEBREW_PREFIX/bin/python3
+python=$HOMEBREW_PREFIX/bin/python3
 
 # node deps
 npm i -g neovim
 
 # python deps
-# eval "$python -m pip install pynvim"
+eval "$python -m pip install pynvim"
 
 # rust deps
-# brew install ripgrep
+# cargo install "fd::fd-find"
+# cargo install "rg::ripgrep"
 
-yes | bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+no | bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)

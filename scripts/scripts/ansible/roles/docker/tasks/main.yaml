@@ -41,7 +41,12 @@
     dest: "/usr/local/bin/docker-compose"
     mode: 0755
 
-- name: Reboot server in order for changes to take place
-  shell: "sleep 1 && reboot"
-  async: 1
-  poll: 0
+- name: Reboot the Debian or Ubuntu server
+  become: true
+  reboot:
+    msg: "Reboot initiated"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime

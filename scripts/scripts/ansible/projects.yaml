@@ -1,0 +1,20 @@
+- name: Install projects
+  hosts: fpp
+  remote_user: will
+  vars_files:
+    - variables/users.yaml
+  tasks:
+
+    - name: Install projects
+      include_tasks: 
+        file: roles/projects/tasks/main.yaml
+        apply:
+          become: true
+          become_user: "{{ item.username }}"
+          # loads .profile properly because it adds -l flag
+          become_method: "community.general.sudosu" 
+      vars:
+        username: "{{ item.username }}"
+        key_file: "{{ item.ssh_key_file }}"
+      loop: "{{ users }}"
+
