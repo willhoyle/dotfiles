@@ -45,7 +45,7 @@ lvim.plugins = {
   -- local projects
   { dir = "~/projects/codegen" },
   { dir = '~/projects/dev',    config = function() require('dev') end },
-  { 'ojroques/vim-oscyank'}
+  { ' ojroques/nvim-osc52' }
 }
 
 -- require('codegen').setup()
@@ -141,3 +141,19 @@ code_actions.setup {
 
 lvim.builtin.nvimtree.setup.update_focused_file.enable = false
 lvim.builtin.nvimtree.setup.update_focused_file.update_root = false
+
+
+-- enables copying text with yy/dd etc.. on a remote linux server to system clipboard
+local function copy(lines, _)
+  require('osc52').copy(table.concat(lines, '\n'))
+end
+
+local function paste()
+  return { vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('') }
+end
+
+vim.g.clipboard = {
+  name = 'osc52',
+  copy = { ['+'] = copy, ['*'] = copy },
+  paste = { ['+'] = paste, ['*'] = paste },
+}
