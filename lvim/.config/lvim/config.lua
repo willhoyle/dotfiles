@@ -25,6 +25,10 @@ autocmd FileType mru nnoremap <buffer> <tab> j
 autocmd FileType mru nnoremap <buffer> <s-tab> k
 ]])
 
+-- keymap
+vim.keymap.set('n', 'R', '"_d', { silent = true })
+vim.keymap.set('v', 'R', '"_d', { silent = true })
+
 
 -- Additional Plugins
 lvim.plugins = {

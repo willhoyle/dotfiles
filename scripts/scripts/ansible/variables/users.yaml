@@ -1,5 +1,5 @@
 ---
-users: 
+users:
   - username: will
     github_username: willhoyle
     dotfiles:
@@ -11,3 +11,6 @@ users:
     github_username: mackhoyle
     dotfiles:
       repo_name: willhoyle/dotfiles
+    ssh_pub_key_file: /Users/will/.ssh/mack_id_rsa.pub
+    ssh_priv_key_file: /Users/will/.ssh/mack_id_rsa
+    ssh_key_file: mack_id_rsa
