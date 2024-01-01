@@ -33,6 +33,9 @@ vim.keymap.set('v', 'R', '"_d', { silent = true })
 -- Additional Plugins
 lvim.plugins = {
   {
+    'ggandor/lightspeed.nvim'
+  },
+  {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
@@ -67,6 +70,16 @@ vim.keymap.set('n', '<C-t>', fterm.toggle)
 vim.keymap.set('t', '<C-t>', fterm.toggle)
 vim.keymap.set('n', '<leader>j', fterm.toggle)
 vim.keymap.set('t', '<leader>j', fterm.toggle)
+
+local lazygit = fterm:new({
+  cmd = "lazygit",
+  dimensions = {
+    height = 0.95,
+    width = 0.95
+  }
+})
+lvim.builtin.which_key.mappings["g"]["g"] = { function() lazygit:toggle() end, "lazygit" }
+
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["t"] = {
@@ -133,6 +146,7 @@ vim.opt.timeoutlen = 250
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black" },
+  { command = "isort" },
   { command = "prettier" }
 }
 
@@ -143,7 +157,7 @@ code_actions.setup {
   },
 }
 
-lvim.builtin.nvimtree.setup.update_focused_file.enable = false
+lvim.builtin.nvimtree.setup.update_focused_file.enable = true
 lvim.builtin.nvimtree.setup.update_focused_file.update_root = false
 
 
